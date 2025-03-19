@@ -22,6 +22,11 @@ import JumpSearchVisualization from '../components/visualization/algorithms/sear
 import InterpolationSearchVisualization from '../components/visualization/algorithms/search-visualizations/InterpolationSearchVisualization';
 import ExponentialSearchVisualization from '../components/visualization/algorithms/search-visualizations/ExponentialSearchVisualization';
 import FibonacciSearchVisualization from '../components/visualization/algorithms/search-visualizations/FibonacciSearchVisualization';
+import BFSVisualization from '../components/visualization/algorithms/graph-visualizations/BFSVisualization';
+import DFSVisualization from '../components/visualization/algorithms/graph-visualizations/DFSVisualization';
+import DijkstraVisualization from '../components/visualization/algorithms/graph-visualizations/DijkstraVisualization';
+import BellmanFordVisualization from '../components/visualization/algorithms/graph-visualizations/BellmanFordVisualization';
+import FloydWarshallVisualization from '../components/visualization/algorithms/graph-visualizations/FloydWarshallVisualization';
 
 const AlgorithmDetail = () => {
   const { categoryId, algorithmId } = useParams();
@@ -99,6 +104,16 @@ const AlgorithmDetail = () => {
         return <ExponentialSearchVisualization key={visualizationKey} />;
       case 'fibonacci-search':
         return <FibonacciSearchVisualization key={visualizationKey} />;
+      case 'bfs':
+        return <BFSVisualization key={visualizationKey} />;
+      case 'dfs':
+        return <DFSVisualization key={visualizationKey} />;
+      case 'dijkstra':
+        return <DijkstraVisualization key={visualizationKey} />;
+      case 'bellman-ford':
+        return <BellmanFordVisualization key={visualizationKey} />;
+      case 'floyd-warshall':
+        return <FloydWarshallVisualization key={visualizationKey} />;
       default:
         return (
           <div className="h-64 bg-gray-100 rounded-lg flex items-center justify-center">

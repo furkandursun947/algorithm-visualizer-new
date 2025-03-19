@@ -115,11 +115,10 @@ const VisualizationContainer = ({
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left side: Algorithm visualization */}
-        <div className="lg:col-span-2 bg-white rounded-lg shadow-md p-4">
-          <div className="h-64 md:h-96 flex items-center justify-center">
-            <AnimatePresence mode="wait">
+        <div className="lg:col-span-2 bg-white rounded-lg shadow-md p-4 overflow-hidden">
+          <div className="min-h-64 md:min-h-96 h-auto flex flex-col overflow-visible">
+            <AnimatePresence mode="sync">
               <VisualizationComponent 
-                key={currentStep}
                 data={data}
                 step={currentStep}
                 stepInfo={currentStepInfo}
@@ -146,7 +145,7 @@ const VisualizationContainer = ({
         </div>
         
         {/* Right side: Step information */}
-        <div className="lg:col-span-1">
+        <div className="lg:col-span-1 relative">
           <AnimatePresence mode="wait">
             <StepInfo
               key={currentStep}
@@ -155,6 +154,21 @@ const VisualizationContainer = ({
               complexityInfo={currentStepInfo.complexityInfo}
             />
           </AnimatePresence>
+          
+          <motion.div
+            className="absolute bottom-0 m-auto w-full mt-4 bg-blue-50 rounded-lg p-3 border border-blue-200 text-blue-700 cursor-pointer hover:bg-blue-100 transition-colors flex items-center justify-center"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            onClick={() => window.location.reload()}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            Reload for new example
+          </motion.div>
         </div>
       </div>
     </div>
