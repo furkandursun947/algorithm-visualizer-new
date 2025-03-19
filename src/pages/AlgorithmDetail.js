@@ -1,0 +1,341 @@
+import React, { useEffect, useState } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { FaArrowLeft, FaClock, FaMemory, FaCode, FaListOl } from 'react-icons/fa';
+import Layout from '../components/layout/Layout';
+import algorithmData from '../data/algorithms.json';
+import { useLenis } from '../context/LenisContext';
+import BubbleSortVisualization from '../components/visualization/algorithms/sort-visualizations/BubbleSortVisualization';
+import SelectionSortVisualization from '../components/visualization/algorithms/sort-visualizations/SelectionSortVisualization';
+import InsertionSortVisualization from '../components/visualization/algorithms/sort-visualizations/InsertionSortVisualization';
+import MergeSortVisualization from '../components/visualization/algorithms/sort-visualizations/MergeSortVisualization';
+import QuickSortVisualization from '../components/visualization/algorithms/sort-visualizations/QuickSortVisualization';
+import HeapSortVisualization from '../components/visualization/algorithms/sort-visualizations/HeapSortVisualization';
+import RadixSortVisualization from '../components/visualization/algorithms/sort-visualizations/RadixSortVisualization';
+import CountingSortVisualization from '../components/visualization/algorithms/sort-visualizations/CountingSortVisualization';
+import ShellSortVisualization from '../components/visualization/algorithms/sort-visualizations/ShellSortVisualization';
+import TimSortVisualization from '../components/visualization/algorithms/sort-visualizations/TimSortVisualization';
+import BucketSortVisualization from '../components/visualization/algorithms/sort-visualizations/BucketSortVisualization';
+import LinearSearchVisualization from '../components/visualization/algorithms/search-visualizations/LinearSearchVisualization';
+import BinarySearchVisualization from '../components/visualization/algorithms/search-visualizations/BinarySearchVisualization';
+import JumpSearchVisualization from '../components/visualization/algorithms/search-visualizations/JumpSearchVisualization';
+import InterpolationSearchVisualization from '../components/visualization/algorithms/search-visualizations/InterpolationSearchVisualization';
+import ExponentialSearchVisualization from '../components/visualization/algorithms/search-visualizations/ExponentialSearchVisualization';
+import FibonacciSearchVisualization from '../components/visualization/algorithms/search-visualizations/FibonacciSearchVisualization';
+
+const AlgorithmDetail = () => {
+  const { categoryId, algorithmId } = useParams();
+  const [algorithm, setAlgorithm] = useState(null);
+  const [category, setCategory] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const lenis = useLenis();
+
+  useEffect(() => {
+    // Scroll to top when component mounts
+    if (lenis) {
+      lenis.scrollTo(0, { immediate: true });
+    }
+    
+    // Find the category and algorithm
+    const foundCategory = algorithmData.categories.find(cat => cat.id === categoryId);
+    
+    if (foundCategory) {
+      setCategory(foundCategory);
+      const foundAlgorithm = foundCategory.algorithms.find(algo => algo.id === algorithmId);
+      
+      if (foundAlgorithm) {
+        setAlgorithm(foundAlgorithm);
+      } else {
+        // Algorithm not found, redirect to the category page
+        navigate(`/algorithms#${categoryId}`);
+      }
+    } else {
+      // Category not found, redirect to algorithms page
+      navigate('/algorithms');
+    }
+    
+    setLoading(false);
+  }, [categoryId, algorithmId, navigate, lenis]);
+
+  // Helper function to render the appropriate visualization based on algorithm ID
+  const renderAlgorithmVisualization = () => {
+    if (!algorithm) return null;
+    
+    const visualizationKey = `${algorithmId}-${categoryId}`;
+    
+    switch (algorithm.id) {
+      case 'bubble-sort':
+        return <BubbleSortVisualization key={visualizationKey} />;
+      case 'selection-sort':
+        return <SelectionSortVisualization key={visualizationKey} />;
+      case 'insertion-sort':
+        return <InsertionSortVisualization key={visualizationKey} />;
+      case 'merge-sort':
+        return <MergeSortVisualization key={visualizationKey} />;
+      case 'quick-sort':
+        return <QuickSortVisualization key={visualizationKey} />;
+      case 'heap-sort':
+        return <HeapSortVisualization key={visualizationKey} />;
+      case 'radix-sort':
+        return <RadixSortVisualization key={visualizationKey} />;
+      case 'counting-sort':
+        return <CountingSortVisualization key={visualizationKey} />;
+      case 'shell-sort':
+        return <ShellSortVisualization key={visualizationKey} />;
+      case 'bucket-sort':
+        return <BucketSortVisualization key={visualizationKey} />;
+      case 'tim-sort':
+        return <TimSortVisualization key={visualizationKey} />;
+      case 'linear-search':
+        return <LinearSearchVisualization key={visualizationKey} />;
+      case 'binary-search':
+        return <BinarySearchVisualization key={visualizationKey} />;
+      case 'jump-search':
+        return <JumpSearchVisualization key={visualizationKey} />;
+      case 'interpolation-search':
+        return <InterpolationSearchVisualization key={visualizationKey} />;
+      case 'exponential-search':
+        return <ExponentialSearchVisualization key={visualizationKey} />;
+      case 'fibonacci-search':
+        return <FibonacciSearchVisualization key={visualizationKey} />;
+      default:
+        return (
+          <div className="h-64 bg-gray-100 rounded-lg flex items-center justify-center">
+            <p className="text-gray-500">Visualization for {algorithm.name} will be available soon!</p>
+          </div>
+        );
+    }
+  };
+
+  if (loading) {
+    return (
+      <Layout>
+        <div className="py-16 text-center">
+          <div className="animate-pulse">
+            <div className="h-8 bg-slate-200 rounded w-1/4 mx-auto mb-4"></div>
+            <div className="h-4 bg-slate-200 rounded w-1/2 mx-auto"></div>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
+
+  if (!algorithm || !category) {
+    return (
+      <Layout>
+        <div className="py-16 text-center">
+          <h2 className="text-2xl font-bold text-gray-900">Algorithm not found</h2>
+          <p className="mt-2 text-gray-600">The algorithm you are looking for does not exist.</p>
+          <Link 
+            to="/algorithms" 
+            className="mt-6 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
+          >
+            <FaArrowLeft className="mr-2" /> Back to Algorithms
+          </Link>
+        </div>
+      </Layout>
+    );
+  }
+
+  return (
+    <Layout>
+      <motion.div
+        className="py-8 bg-slate-50 min-h-screen"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Breadcrumb Navigation */}
+          <div className="mb-6">
+            <nav className="flex" aria-label="Breadcrumb">
+              <ol className="flex items-center space-x-2">
+                <li>
+                  <Link to="/" className="text-gray-500 hover:text-blue-600">Home</Link>
+                </li>
+                <li className="flex items-center">
+                  <svg className="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                  </svg>
+                  <Link to="/algorithms" className="ml-2 text-gray-500 hover:text-blue-600">
+                    Algorithms
+                  </Link>
+                </li>
+                <li className="flex items-center">
+                  <svg className="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                  </svg>
+                  <Link to={`/algorithms#${category.id}`} className="ml-2 text-gray-500 hover:text-blue-600">
+                    {category.name}
+                  </Link>
+                </li>
+                <li className="flex items-center">
+                  <svg className="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                  </svg>
+                  <span className="ml-2 text-blue-600 font-medium" aria-current="page">
+                    {algorithm.name}
+                  </span>
+                </li>
+              </ol>
+            </nav>
+          </div>
+
+          {/* Back Button */}
+          <div className="mb-8">
+            <Link 
+              to={`/algorithms#${category.id}`} 
+              className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+            >
+              <FaArrowLeft className="mr-2" /> Back to {category.name}
+            </Link>
+          </div>
+
+          {/* Algorithm Header */}
+          <motion.div
+            className="bg-white rounded-lg shadow-md p-8 mb-8"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+              {algorithm.name}
+            </h1>
+            <p className="text-xl text-gray-600 mb-6">
+              {algorithm.description}
+            </p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="flex items-start">
+                <div className="flex-shrink-0">
+                  <FaClock className="h-6 w-6 text-blue-600" />
+                </div>
+                <div className="ml-4">
+                  <h3 className="text-lg font-medium text-gray-900">Time Complexity</h3>
+                  <ul className="mt-2 text-gray-600">
+                    <li className="flex items-center">
+                      <span className="font-medium mr-2">Best:</span> {algorithm.timeComplexity.best}
+                    </li>
+                    <li className="flex items-center">
+                      <span className="font-medium mr-2">Average:</span> {algorithm.timeComplexity.average}
+                    </li>
+                    <li className="flex items-center">
+                      <span className="font-medium mr-2">Worst:</span> {algorithm.timeComplexity.worst}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div className="flex items-start">
+                <div className="flex-shrink-0">
+                  <FaMemory className="h-6 w-6 text-blue-600" />
+                </div>
+                <div className="ml-4">
+                  <h3 className="text-lg font-medium text-gray-900">Space Complexity</h3>
+                  <p className="mt-2 text-gray-600">{algorithm.spaceComplexity}</p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Algorithm Details */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+            {/* Pseudocode */}
+            <motion.div
+              className="bg-white rounded-lg shadow-md overflow-hidden"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              <div className="flex items-center bg-gray-50 px-6 py-4 border-b">
+                <FaCode className="h-5 w-5 text-blue-600 mr-3" />
+                <h2 className="text-xl font-semibold text-gray-900">Pseudocode</h2>
+              </div>
+              <div className="p-6">
+                <pre className="bg-gray-50 p-4 rounded-md text-sm text-gray-800 whitespace-pre-wrap overflow-auto">
+                  {algorithm.pseudocode.join('\n')}
+                </pre>
+              </div>
+            </motion.div>
+
+            {/* Visualization Steps */}
+            <motion.div
+              className="bg-white rounded-lg shadow-md overflow-hidden"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <div className="flex items-center bg-gray-50 px-6 py-4 border-b">
+                <FaListOl className="h-5 w-5 text-blue-600 mr-3" />
+                <h2 className="text-xl font-semibold text-gray-900">Visualization Steps</h2>
+              </div>
+              <div className="p-6">
+                {algorithm && algorithm.visualizationSteps && Array.isArray(algorithm.visualizationSteps) ? (
+                  <ol className="list-decimal list-inside space-y-2">
+                    {algorithm.visualizationSteps.map((step, index) => (
+                      <li key={index} className="text-gray-700">{step}</li>
+                    ))}
+                  </ol>
+                ) : (
+                  <p className="text-gray-600">Visualization steps will be available soon!</p>
+                )}
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Interactive Visualization */}
+          <motion.div
+            className="bg-white rounded-lg shadow-md p-8 mb-8"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">Interactive Visualization</h2>
+            <p className="text-gray-600 mb-8">
+              Watch how {algorithm.name} works step by step with our interactive visualization.
+            </p>
+            
+            {/* Dynamic visualization rendering */}
+            {renderAlgorithmVisualization()}
+          </motion.div>
+
+          {/* Related Algorithms */}
+          <motion.div
+            className="bg-white rounded-lg shadow-md p-8"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">Related Algorithms</h2>
+            <p className="text-gray-600 mb-6">
+              Explore other {category.name.toLowerCase()}.
+            </p>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {category && category.algorithms && Array.isArray(category.algorithms) && 
+                category.algorithms
+                  .filter(algo => algo.id !== algorithm.id)
+                  .slice(0, 3)
+                  .map(algo => (
+                    <Link 
+                      key={algo.id}
+                      to={`/algorithms/${category.id}/${algo.id}`}
+                      className="block bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors"
+                    >
+                      <h3 className="font-medium text-gray-900 mb-1">{algo.name}</h3>
+                      <p className="text-sm text-gray-600 line-clamp-2">{algo.description}</p>
+                    </Link>
+                  ))}
+              {(!category || !category.algorithms || !Array.isArray(category.algorithms) || category.algorithms.filter(algo => algo.id !== algorithm.id).length === 0) && (
+                <p className="text-gray-600 col-span-3 text-center">No related algorithms available.</p>
+              )}
+            </div>
+          </motion.div>
+        </div>
+      </motion.div>
+    </Layout>
+  );
+};
+
+export default AlgorithmDetail; 
