@@ -22,11 +22,27 @@ import JumpSearchVisualization from '../components/visualization/algorithms/sear
 import InterpolationSearchVisualization from '../components/visualization/algorithms/search-visualizations/InterpolationSearchVisualization';
 import ExponentialSearchVisualization from '../components/visualization/algorithms/search-visualizations/ExponentialSearchVisualization';
 import FibonacciSearchVisualization from '../components/visualization/algorithms/search-visualizations/FibonacciSearchVisualization';
+import TernarySearchVisualization from '../components/visualization/algorithms/search-visualizations/TernarySearchVisualization';
 import BFSVisualization from '../components/visualization/algorithms/graph-visualizations/BFSVisualization';
 import DFSVisualization from '../components/visualization/algorithms/graph-visualizations/DFSVisualization';
 import DijkstraVisualization from '../components/visualization/algorithms/graph-visualizations/DijkstraVisualization';
 import BellmanFordVisualization from '../components/visualization/algorithms/graph-visualizations/BellmanFordVisualization';
 import FloydWarshallVisualization from '../components/visualization/algorithms/graph-visualizations/FloydWarshallVisualization';
+import KruskalsVisualization from '../components/visualization/algorithms/graph-visualizations/KruskalsVisualization';
+import PrimsVisualization from '../components/visualization/algorithms/graph-visualizations/PrimsVisualization';
+import TopologicalSortVisualization from '../components/visualization/algorithms/graph-visualizations/TopologicalSortVisualization';
+import JohnsonsVisualization from '../components/visualization/algorithms/graph-visualizations/JohnsonsVisualization';
+import AStarSearchVisualization from '../components/visualization/algorithms/graph-visualizations/AStarSearchVisualization';
+import FordFulkersonVisualization from '../components/visualization/algorithms/graph-visualizations/FordFulkersonVisualization';
+import FibonacciSequenceVisualization from '../components/visualization/algorithms/dp-visualizations/FibonacciSequenceVisualization';
+import KnapsackVisualization from '../components/visualization/algorithms/dp-visualizations/KnapsackVisualization';
+import LCSVisualization from '../components/visualization/algorithms/dp-visualizations/LCSVisualization';
+import LISVisualization from '../components/visualization/algorithms/dp-visualizations/LISVisualization';
+import MatrixChainMultiplicationVisualization from '../components/visualization/algorithms/dp-visualizations/MatrixChainMultiplicationVisualization';
+import EditDistanceVisualization from '../components/visualization/algorithms/dp-visualizations/EditDistanceVisualization';
+import CoinChangeVisualization from '../components/visualization/algorithms/dp-visualizations/CoinChangeVisualization';
+import SubsetSumVisualization from '../components/visualization/algorithms/dp-visualizations/SubsetSumVisualization';
+import RodCuttingVisualization from '../components/visualization/algorithms/dp-visualizations/RodCuttingVisualization';
 
 const AlgorithmDetail = () => {
   const { categoryId, algorithmId } = useParams();
@@ -67,7 +83,7 @@ const AlgorithmDetail = () => {
   const renderAlgorithmVisualization = () => {
     if (!algorithm) return null;
     
-    const visualizationKey = `${algorithmId}-${categoryId}`;
+    const visualizationKey = `${algorithm.id}-${Date.now()}`;
     
     switch (algorithm.id) {
       case 'bubble-sort':
@@ -104,6 +120,8 @@ const AlgorithmDetail = () => {
         return <ExponentialSearchVisualization key={visualizationKey} />;
       case 'fibonacci-search':
         return <FibonacciSearchVisualization key={visualizationKey} />;
+      case 'ternary-search':
+        return <TernarySearchVisualization key={visualizationKey} />;
       case 'bfs':
         return <BFSVisualization key={visualizationKey} />;
       case 'dfs':
@@ -114,6 +132,36 @@ const AlgorithmDetail = () => {
         return <BellmanFordVisualization key={visualizationKey} />;
       case 'floyd-warshall':
         return <FloydWarshallVisualization key={visualizationKey} />;
+      case 'kruskals':
+        return <KruskalsVisualization key={visualizationKey} />;
+      case 'prims':
+        return <PrimsVisualization key={visualizationKey} />;
+      case 'topological-sort':
+        return <TopologicalSortVisualization key={visualizationKey} />;
+      case 'johnsons':
+        return <JohnsonsVisualization key={visualizationKey} />;
+      case 'astar':
+        return <AStarSearchVisualization key={visualizationKey} />;
+      case 'ford-fulkerson':
+        return <FordFulkersonVisualization key={visualizationKey} />;
+      case 'fibonacci':
+        return <FibonacciSequenceVisualization key={visualizationKey} />;
+      case 'knapsack':
+        return <KnapsackVisualization key={visualizationKey} />;
+      case 'lcs':
+        return <LCSVisualization key={visualizationKey} />;
+      case 'lis':
+        return <LISVisualization key={visualizationKey} />;
+      case 'matrix-chain-multiplication':
+        return <MatrixChainMultiplicationVisualization key={visualizationKey} />;
+      case 'edit-distance':
+        return <EditDistanceVisualization key={visualizationKey} />;
+      case 'coin-change':
+        return <CoinChangeVisualization key={visualizationKey} />;
+      case 'subset-sum':
+        return <SubsetSumVisualization key={visualizationKey} />;
+      case 'rod-cutting':
+        return <RodCuttingVisualization key={visualizationKey} />;
       default:
         return (
           <div className="h-64 bg-gray-100 rounded-lg flex items-center justify-center">

@@ -57,6 +57,15 @@ const GraphVisualization = ({
       (!edge.directed && p.source === edge.target && p.target === edge.source)
     );
     
+    // Check if edge is part of the MST (for Kruskal's algorithm)
+    const isMSTEdge = edge.mstEdge === true;
+    
+    // Check if edge is rejected (for Kruskal's algorithm)
+    const isRejectedEdge = edge.rejectedEdge === true;
+    
+    // Check if edge is currently being considered (for Prim's algorithm)
+    const isCurrentEdge = edge.currentEdge === true;
+    
     return (
       <g key={`edge-${edge.source}-${edge.target}`}>
         <motion.line
@@ -64,8 +73,9 @@ const GraphVisualization = ({
           animate={{ 
             pathLength: 1, 
             opacity: 1,
-            stroke: isInPath ? "#10B981" : "#94A3B8",
-            strokeWidth: isInPath ? 3 : 2
+            stroke: isMSTEdge ? "#10B981" : isRejectedEdge ? "#EF4444" : isCurrentEdge ? "#F59E0B" : isInPath ? "#10B981" : "#94A3B8",
+            strokeWidth: isMSTEdge || isInPath ? 3 : isRejectedEdge ? 1 : isCurrentEdge ? 2.5 : 2,
+            strokeDasharray: isRejectedEdge ? "4,4" : "none"
           }}
           transition={{ duration: 0.5 }}
           x1={sourcePos.x}
@@ -78,10 +88,10 @@ const GraphVisualization = ({
           <text
             x={(sourcePos.x + targetPos.x) / 2}
             y={(sourcePos.y + targetPos.y) / 2 - 8}
-            fill="#4B5563"
+            fill={isMSTEdge ? "#047857" : isRejectedEdge ? "#B91C1C" : isCurrentEdge ? "#B45309" : "#4B5563"}
             textAnchor="middle"
             fontSize="12"
-            fontWeight="500"
+            fontWeight={isMSTEdge || isCurrentEdge ? "600" : "500"}
             className="edge-weight"
           >
             {edge.weight}
@@ -230,6 +240,27 @@ const GraphVisualization = ({
           <div className="flex items-center mx-2">
             <div className="w-3 h-3 rounded-full bg-gray-100 border-2 border-gray-400 mr-1"></div>
             <span className="text-gray-600">Visited</span>
+          </div>
+        )}
+        {/* Show MST edges in legend for Kruskal's algorithm */}
+        {edges.some(e => e.mstEdge) && (
+          <div className="flex items-center mx-2">
+            <div className="w-6 h-1 bg-green-500 mr-1"></div>
+            <span className="text-green-700">MST Edge</span>
+          </div>
+        )}
+        {/* Show current edges in legend for Prim's algorithm */}
+        {edges.some(e => e.currentEdge) && (
+          <div className="flex items-center mx-2">
+            <div className="w-6 h-1 bg-yellow-500 mr-1"></div>
+            <span className="text-yellow-700">Current Edge</span>
+          </div>
+        )}
+        {/* Show rejected edges in legend for Kruskal's algorithm */}
+        {edges.some(e => e.rejectedEdge) && (
+          <div className="flex items-center mx-2">
+            <div className="w-6 h-1 bg-red-500 border-0 border-dashed mr-1" style={{ borderTopStyle: 'dashed' }}></div>
+            <span className="text-red-700">Rejected Edge</span>
           </div>
         )}
       </div>
