@@ -40,11 +40,12 @@ const StepInfo = ({
       )}
       
       {complexityInfo && (
-        <div>
+        <div className="mb-4">
           <h4 className="text-sm font-medium text-gray-700 mb-2">Complexity at this step:</h4>
           <p className="text-gray-600 text-sm">{complexityInfo}</p>
         </div>
       )}
+      
     </motion.div>
   );
 };

@@ -27,9 +27,9 @@ const AlgorithmCard = ({ algorithm, categoryId }) => {
             <div>
               <p className="text-sm font-medium text-gray-700">Time Complexity</p>
               <div className="text-xs text-gray-500">
-                <span className="mr-2">Best: {algorithm.timeComplexity.best}</span>
-                <span className="mr-2">Average: {algorithm.timeComplexity.average}</span>
-                <span>Worst: {algorithm.timeComplexity.worst}</span>
+                <span className="mr-2">Best: {algorithm.timeComplexity?.best}</span>
+                <span className="mr-2">Average: {algorithm.timeComplexity?.average}</span>
+                <span>Worst: {algorithm.timeComplexity?.worst}</span>
               </div>
             </div>
           </div>

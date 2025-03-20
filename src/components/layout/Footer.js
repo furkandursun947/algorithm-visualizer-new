@@ -16,7 +16,7 @@ const Footer = () => {
             transition={{ duration: 0.5 }}
           >
             <p className="text-center md:text-left">
-              &copy; {currentYear} AlgoVisualizer. All rights reserved.
+              &copy; {currentYear} Furkan Emre Dursun. All rights reserved.
             </p>
           </motion.div>
           
@@ -27,7 +27,7 @@ const Footer = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <motion.a
-              href="https://github.com"
+              href="https://github.com/furkandursun947"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-300 hover:text-white transition duration-300"
@@ -37,7 +37,7 @@ const Footer = () => {
               <FaGithub size={24} />
             </motion.a>
             <motion.a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/furkandursun947/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-300 hover:text-white transition duration-300"

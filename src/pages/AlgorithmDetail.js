@@ -43,6 +43,20 @@ import EditDistanceVisualization from '../components/visualization/algorithms/dp
 import CoinChangeVisualization from '../components/visualization/algorithms/dp-visualizations/CoinChangeVisualization';
 import SubsetSumVisualization from '../components/visualization/algorithms/dp-visualizations/SubsetSumVisualization';
 import RodCuttingVisualization from '../components/visualization/algorithms/dp-visualizations/RodCuttingVisualization';
+import ShortestCommonSupersequenceVisualization from '../components/visualization/algorithms/dp-visualizations/ShortestCommonSupersequenceVisualization';
+import StrassenMatrixMultiplicationVisualization from '../components/visualization/algorithms/divide-conquer-visualizations/StrassenMatrixMultiplicationVisualization';
+import ClosestPairVisualization from '../components/visualization/algorithms/divide-conquer-visualizations/ClosestPairVisualization';
+import FastFourierTransformVisualization from '../components/visualization/algorithms/divide-conquer-visualizations/FastFourierTransformVisualization';
+import KaratsubaMultiplicationVisualization from '../components/visualization/algorithms/divide-conquer-visualizations/KaratsubaMultiplicationVisualization';
+import HuffmanCodingVisualization from '../components/visualization/algorithms/greedy-visualizations/HuffmanCodingVisualization';
+import JobSequencingVisualization from '../components/visualization/algorithms/greedy-visualizations/JobSequencingVisualization';
+import FractionalKnapsackVisualization from '../components/visualization/algorithms/greedy-visualizations/FractionalKnapsackVisualization';
+import ActivitySelectionVisualization from '../components/visualization/algorithms/greedy-visualizations/ActivitySelectionVisualization';
+import NQueensVisualization from '../components/visualization/algorithms/backtracking-visualizations/NQueensVisualization';
+import RatInMazeVisualization from '../components/visualization/algorithms/backtracking-visualizations/RatInMazeVisualization';
+import KnightsTourVisualization from '../components/visualization/algorithms/backtracking-visualizations/KnightsTourVisualization';
+import HamiltonianCycleVisualization from '../components/visualization/algorithms/backtracking-visualizations/HamiltonianCycleVisualization';
+import SudokuSolverVisualization from '../components/visualization/algorithms/backtracking-visualizations/SudokuSolverVisualization';
 
 const AlgorithmDetail = () => {
   const { categoryId, algorithmId } = useParams();
@@ -162,6 +176,34 @@ const AlgorithmDetail = () => {
         return <SubsetSumVisualization key={visualizationKey} />;
       case 'rod-cutting':
         return <RodCuttingVisualization key={visualizationKey} />;
+      case 'shortest-common-supersequence':
+        return <ShortestCommonSupersequenceVisualization key={visualizationKey} />;
+      case 'strassen-matrix-multiplication':
+        return <StrassenMatrixMultiplicationVisualization key={visualizationKey} />;
+      case 'closest-pair':
+        return <ClosestPairVisualization key={visualizationKey} />;
+      case 'karatsuba':
+        return <KaratsubaMultiplicationVisualization key={visualizationKey} />;
+      case 'fft':
+        return <FastFourierTransformVisualization key={visualizationKey} />;
+      case 'huffman-coding':
+        return <HuffmanCodingVisualization key={visualizationKey} />;
+      case 'job-sequencing':
+        return <JobSequencingVisualization key={visualizationKey} />;
+      case 'fractional-knapsack':
+        return <FractionalKnapsackVisualization key={visualizationKey} />;
+      case 'activity-selection':
+        return <ActivitySelectionVisualization key={visualizationKey} />;
+      case 'n-queens':
+        return <NQueensVisualization key={visualizationKey} />;
+      case 'rat-in-maze':
+        return <RatInMazeVisualization key={visualizationKey} />;
+      case 'knights-tour':
+        return <KnightsTourVisualization key={visualizationKey} />;
+      case 'hamiltonian-cycle':
+        return <HamiltonianCycleVisualization key={visualizationKey} />;
+      case 'sudoku-solver':
+        return <SudokuSolverVisualization key={visualizationKey} />;
       default:
         return (
           <div className="h-64 bg-gray-100 rounded-lg flex items-center justify-center">
@@ -230,7 +272,7 @@ const AlgorithmDetail = () => {
                     <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
                   </svg>
                   <Link to={`/algorithms#${category.id}`} className="ml-2 text-gray-500 hover:text-blue-600">
-                    {category.name}
+                    {category?.name}
                   </Link>
                 </li>
                 <li className="flex items-center">
@@ -238,7 +280,7 @@ const AlgorithmDetail = () => {
                     <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
                   </svg>
                   <span className="ml-2 text-blue-600 font-medium" aria-current="page">
-                    {algorithm.name}
+                    {algorithm?.name}
                   </span>
                 </li>
               </ol>
@@ -251,7 +293,7 @@ const AlgorithmDetail = () => {
               to={`/algorithms#${category.id}`} 
               className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
             >
-              <FaArrowLeft className="mr-2" /> Back to {category.name}
+              <FaArrowLeft className="mr-2" /> Back to {category?.name}
             </Link>
           </div>
 
