@@ -358,9 +358,13 @@ const AlgorithmDetail = () => {
                 <h2 className="text-xl font-semibold text-gray-900">Pseudocode</h2>
               </div>
               <div className="p-6">
-                <pre className="bg-gray-50 p-4 rounded-md text-sm text-gray-800 whitespace-pre-wrap overflow-auto">
-                  {algorithm.pseudocode.join('\n')}
-                </pre>
+                {algorithm && algorithm.pseudocode && Array.isArray(algorithm.pseudocode) ? (
+                  <pre className="bg-gray-50 p-4 rounded-md text-sm text-gray-800 whitespace-pre-wrap overflow-auto">
+                    {algorithm.pseudocode.join('\n')}
+                  </pre>
+                ) : (
+                  <p className="text-gray-600">Pseudocode will be available soon!</p>
+                )}
               </div>
             </motion.div>
 
