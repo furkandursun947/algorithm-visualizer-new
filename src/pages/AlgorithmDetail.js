@@ -62,6 +62,11 @@ import KMPVisualization from '../components/visualization/algorithms/string-visu
 import RabinKarpVisualization from '../components/visualization/algorithms/string-visualizations/RabinKarpVisualization';
 import ZAlgorithmVisualization from '../components/visualization/algorithms/string-visualizations/ZAlgorithmVisualization';
 import BoyerMooreVisualization from '../components/visualization/algorithms/string-visualizations/BoyerMooreVisualization';
+import InorderTraversalVisualization from '../components/visualization/algorithms/tree-visualizations/InorderTraversalVisualization';
+import PreorderTraversalVisualization from "../components/visualization/algorithms/tree-visualizations/PreorderTraversalVisualization";
+import PostorderTraversalVisualization from "../components/visualization/algorithms/tree-visualizations/PostorderTraversalVisualization";
+import LevelOrderTraversalVisualization from "../components/visualization/algorithms/tree-visualizations/LevelOrderTraversalVisualization";
+import BinarySearchTreeVisualization from "../components/visualization/algorithms/tree-visualizations/BinarySearchTreeVisualization";
 
 // Helper function to render HTML content safely
 const renderHtmlContent = (htmlArray) => {
@@ -229,6 +234,16 @@ const AlgorithmDetail = () => {
         return <ZAlgorithmVisualization key={visualizationKey} />;
       case 'boyer-moore':
         return <BoyerMooreVisualization key={visualizationKey} />;
+      case 'inorder-traversal':
+        return <InorderTraversalVisualization />;
+      case 'preorder-traversal':
+        return <PreorderTraversalVisualization />;
+      case 'postorder-traversal':
+        return <PostorderTraversalVisualization />;
+      case 'level-order-traversal':
+        return <LevelOrderTraversalVisualization />;
+      case 'binary-search-tree':
+        return <BinarySearchTreeVisualization />;
       default:
         return (
           <div className="h-64 bg-gray-100 rounded-lg flex items-center justify-center">
