@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaArrowLeft, FaClock, FaMemory, FaCode, FaListOl } from 'react-icons/fa';
@@ -57,6 +57,20 @@ import RatInMazeVisualization from '../components/visualization/algorithms/backt
 import KnightsTourVisualization from '../components/visualization/algorithms/backtracking-visualizations/KnightsTourVisualization';
 import HamiltonianCycleVisualization from '../components/visualization/algorithms/backtracking-visualizations/HamiltonianCycleVisualization';
 import SudokuSolverVisualization from '../components/visualization/algorithms/backtracking-visualizations/SudokuSolverVisualization';
+import NaivePatternSearchingVisualization from '../components/visualization/algorithms/string-visualizations/NaivePatternSearchingVisualization';
+import KMPVisualization from '../components/visualization/algorithms/string-visualizations/KMPVisualization';
+import RabinKarpVisualization from '../components/visualization/algorithms/string-visualizations/RabinKarpVisualization';
+import ZAlgorithmVisualization from '../components/visualization/algorithms/string-visualizations/ZAlgorithmVisualization';
+import BoyerMooreVisualization from '../components/visualization/algorithms/string-visualizations/BoyerMooreVisualization';
+
+// Helper function to render HTML content safely
+const renderHtmlContent = (htmlArray) => {
+  if (!htmlArray || !Array.isArray(htmlArray)) return null;
+  
+  return (
+    <div dangerouslySetInnerHTML={{ __html: htmlArray.join('') }} />
+  );
+};
 
 const AlgorithmDetail = () => {
   const { categoryId, algorithmId } = useParams();
@@ -65,6 +79,7 @@ const AlgorithmDetail = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const lenis = useLenis();
+  const titleRef = useRef(null);
 
   useEffect(() => {
     // Scroll to top when component mounts
@@ -204,6 +219,16 @@ const AlgorithmDetail = () => {
         return <HamiltonianCycleVisualization key={visualizationKey} />;
       case 'sudoku-solver':
         return <SudokuSolverVisualization key={visualizationKey} />;
+      case 'naive-pattern-searching':
+        return <NaivePatternSearchingVisualization key={visualizationKey} />;
+      case 'kmp':
+        return <KMPVisualization key={visualizationKey} />;
+      case 'rabin-karp':
+        return <RabinKarpVisualization key={visualizationKey} />;
+      case 'z-algorithm':
+        return <ZAlgorithmVisualization key={visualizationKey} />;
+      case 'boyer-moore':
+        return <BoyerMooreVisualization key={visualizationKey} />;
       default:
         return (
           <div className="h-64 bg-gray-100 rounded-lg flex items-center justify-center">
@@ -341,6 +366,26 @@ const AlgorithmDetail = () => {
                   <p className="mt-2 text-gray-600">{algorithm.spaceComplexity}</p>
                 </div>
               </div>
+            </div>
+          </motion.div>
+
+          {/* How Algorithm Works */}
+          <motion.div
+            className="bg-white rounded-lg shadow-md p-8 mb-8"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.25 }}
+          >
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">How {algorithm.name} Works</h2>
+            <div className="prose max-w-none text-gray-600">
+              {/* Render content from algorithm.howItWorks field if available */}
+              {algorithm.howItWorks ? (
+                renderHtmlContent(algorithm.howItWorks)
+              ) : (
+                <>
+                    <p>This section will provide a detailed explanation of how the {algorithm.name} algorithm works, including its underlying mechanics, step-by-step process, and key insights into why it's effective.</p>
+                </>
+              )}
             </div>
           </motion.div>
 
