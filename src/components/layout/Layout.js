@@ -1,7 +1,7 @@
 import React from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
-
+import { Analytics } from "@vercel/analytics/react"
 const Layout = ({ children }) => {
   return (
     <div className="flex flex-col min-h-screen">
@@ -10,6 +10,7 @@ const Layout = ({ children }) => {
         {children}
       </main>
       <Footer />
+      <Analytics />
     </div>
   );
 };
