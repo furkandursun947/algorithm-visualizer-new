@@ -8,6 +8,7 @@ import NotFound from './pages/NotFound';
 import { LenisProvider } from './context/LenisContext';
 import ScrollToTop from './components/layout/ScrollToTop';
 import './App.css';
+import { Analytics } from '@vercel/analytics/react';
 
 // Create a wrapper component to use the useLocation hook
 const AnimatedRoutes = () => {
@@ -32,6 +33,7 @@ function App() {
         <ScrollToTop />
         <AnimatedRoutes />
       </Router>
+      <Analytics />
     </LenisProvider>
   );
 }
