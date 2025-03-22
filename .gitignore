@@ -18,8 +18,6 @@
 .env.test.local
 .env.production.local
 .cursorrules
-algorithms.json
-algorithm-categories.md
 
 npm-debug.log*
 yarn-debug.log*
