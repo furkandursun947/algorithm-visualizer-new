@@ -67,6 +67,7 @@ import PreorderTraversalVisualization from "../components/visualization/algorith
 import PostorderTraversalVisualization from "../components/visualization/algorithms/tree-visualizations/PostorderTraversalVisualization";
 import LevelOrderTraversalVisualization from "../components/visualization/algorithms/tree-visualizations/LevelOrderTraversalVisualization";
 import BinarySearchTreeVisualization from "../components/visualization/algorithms/tree-visualizations/BinarySearchTreeVisualization";
+import AVLTreeVisualization from "../components/visualization/algorithms/tree-visualizations/AVLTreeVisualization";
 
 // Helper function to render HTML content safely
 const renderHtmlContent = (htmlArray) => {
@@ -244,6 +245,8 @@ const AlgorithmDetail = () => {
         return <LevelOrderTraversalVisualization />;
       case 'binary-search-tree':
         return <BinarySearchTreeVisualization />;
+      case 'avl-tree':
+        return <AVLTreeVisualization />;
       default:
         return (
           <div className="h-64 bg-gray-100 rounded-lg flex items-center justify-center">
